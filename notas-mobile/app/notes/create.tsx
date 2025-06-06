@@ -56,7 +56,7 @@ export default function CreateNote() {
         maxLength={250}
       />
       <View style={styles.switchRow}>
-        <Text>Pública</Text>
+        <Text style={styles.label}>Pública</Text>
         <Switch value={isPublic} onValueChange={setIsPublic} />
       </View>
       <Button title="Crear Nota" onPress={handleCreate} />
@@ -65,7 +65,7 @@ export default function CreateNote() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, marginTop: 40 },
   label: { marginTop: 12, fontWeight: 'bold' },
   input: {
     borderWidth: 1,

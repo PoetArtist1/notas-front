@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 8
+    padding: 8,
+    marginTop: 40
   },
   catItem: {
     backgroundColor: '#f2f2f2',

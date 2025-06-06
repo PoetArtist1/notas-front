@@ -129,7 +129,7 @@ export default function CategoryNotes() {
 }
 
 const styles = StyleSheet.create({
-  header: { padding: 8, flexDirection: 'row', justifyContent: 'flex-start' },
+  header: { padding: 8, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 40 },
   sectionTitle: { marginLeft: 16, marginTop: 12, fontSize: 18, fontWeight: 'bold' },
   noteItem: {
     backgroundColor: '#eef',

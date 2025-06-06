@@ -51,7 +51,7 @@ export default function NoteDetailPage() {
       return;
     }
     try {
-      const resp = await fetch(`http://localhost:3000/api/notes/${id}`, {
+      const resp = await fetch(`${datos.API_URL}/api/notes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function NoteDetailPage() {
 
   const handleDelete = async () => {
     try {
-      const resp = await fetch(`http://localhost:3000/api/notes/${id}`, {
+      const resp = await fetch(`${datos.API_URL}/api/notes/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -125,7 +125,7 @@ export default function NoteDetailPage() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, marginTop: 40 },
   label: { marginTop: 12, fontWeight: 'bold' },
   input: {
     borderWidth: 1,

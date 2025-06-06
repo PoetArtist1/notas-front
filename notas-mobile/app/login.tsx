@@ -53,7 +53,7 @@ export default function Login() {
         secureTextEntry
       />
       <Button title="Iniciar Sesión" onPress={handleSubmit} />
-      <View style={{ marginTop: 16 }}>
+      <View style={{ marginTop: 20 }}>
         <Button title="Registrarse" onPress={() => router.push('/register')} />
       </View>
     </View>
@@ -62,12 +62,12 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, justifyContent: 'center' },
-  title: { fontSize: 24, marginBottom: 16, textAlign: 'center' },
+  title: { fontSize: 24, marginBottom: 16, textAlign: 'center', fontWeight: 'bold' },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 8,
-    marginBottom: 12,
+    marginBottom: 20,
     borderRadius: 4,
   },
 });

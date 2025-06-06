@@ -22,9 +22,9 @@ export default function Favorites() {
   const fetchFavorites = async () => {
     try {
       const resp = await fetch(`${datos.API_URL}/api/favorites`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await resp.json();
+      const data: Note[] = await resp.json();
       setFavorites(data);
     } catch {
       Alert.alert('Error', 'No se pudo cargar favoritos');
@@ -38,19 +38,14 @@ export default function Favorites() {
   const renderItem = ({ item }: { item: Note }) => (
     <View style={styles.noteItem}>
       <Text style={styles.noteTitle}>{item.title}</Text>
-      <Text>Prioridad: {item.priority}</Text>
-      {/* Navegar al detalle con barra inicial "/" y usando template string */}
-      <Button 
-        title="Ver" 
-        onPress={() => router.push(`/notes/${item.id}`)} 
-      />
+      <Text>Favorito</Text>
+      <Button title="Ver" onPress={() => router.push(`/notes/${item.id}`)} />
     </View>
   );
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
-        {/* Volver a /notes (con barra inicial) */}
         <Button title="Volver a Notas" onPress={() => router.push('/notes')} />
       </View>
       <FlatList
@@ -65,12 +60,12 @@ export default function Favorites() {
 }
 
 const styles = StyleSheet.create({
-  header: { padding: 8, flexDirection: 'row', justifyContent: 'flex-start' },
+  header: { padding: 8, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 40 },
   noteItem: {
     backgroundColor: '#fff2e6',
     padding: 12,
     marginBottom: 10,
-    borderRadius: 6
+    borderRadius: 6,
   },
-  noteTitle: { fontSize: 18, fontWeight: 'bold' }
+  noteTitle: { fontSize: 18, fontWeight: 'bold' },
 });
