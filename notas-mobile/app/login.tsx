@@ -1,6 +1,6 @@
 // app/login.tsx
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../src/context/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -28,7 +28,8 @@ export default function Login() {
         Alert.alert('Error', data.msg || 'Credenciales inválidas');
         return;
       }
-      await login(data.token);
+      // data: { token: string, username: string }
+      await login(data.token, data.username);
     } catch (err) {
       Alert.alert('Error', 'No se pudo conectar al servidor');
     }
@@ -52,9 +53,15 @@ export default function Login() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Iniciar Sesión" onPress={handleSubmit} />
-      <View style={{ marginTop: 20 }}>
-        <Button title="Registrarse" onPress={() => router.push('/register')} />
+      <View style={styles.headerButton}>
+      <TouchableOpacity onPress={handleSubmit}>
+        <Text style={styles.headerButtonText}>Iniciar sesión</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.headerButton}>
+        <TouchableOpacity onPress={() => router.push('/register')} >
+          <Text style={styles.headerButtonText}>Registrarse</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -70,4 +77,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 4,
   },
+    headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  }
 });

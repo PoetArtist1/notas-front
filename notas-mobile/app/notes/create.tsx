@@ -1,6 +1,6 @@
 // app/notes/create.tsx
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Switch, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Switch, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { AuthContext } from '../../src/context/AuthContext';
 
@@ -59,7 +59,11 @@ export default function CreateNote() {
         <Text style={styles.label}>Pública</Text>
         <Switch value={isPublic} onValueChange={setIsPublic} />
       </View>
-      <Button title="Crear Nota" onPress={handleCreate} />
+      <View style={styles.headerButton}>
+      <TouchableOpacity onPress={handleCreate}>
+        <Text style={styles.headerButtonText}>Crear nota</Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -79,5 +83,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 12,
     justifyContent: 'space-between'
+  },
+    headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
   }
 });

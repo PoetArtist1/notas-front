@@ -1,6 +1,6 @@
 // app/register.tsx
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../src/context/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -38,7 +38,7 @@ export default function Register() {
       });
       const data2 = await resp2.json();
       if (resp2.ok) {
-        await login(data2.token);
+        await login(data2.token, data2.username);
       } else {
         Alert.alert('Error', 'Registrado, pero no se pudo logear');
       }
@@ -56,6 +56,7 @@ export default function Register() {
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
+        maxLength={20}
       />
       <TextInput
         style={styles.input}
@@ -64,6 +65,7 @@ export default function Register() {
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
+        maxLength={40}
       />
       <TextInput
         style={styles.input}
@@ -71,10 +73,17 @@ export default function Register() {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        maxLength={20}
       />
-      <Button title="Registrarse" onPress={handleSubmit} />
-      <View style={{ marginTop: 16 }}>
-        <Button title="Ya tengo cuenta" onPress={() => router.push('/login')} />
+      <View style={styles.headerButton}>
+      <TouchableOpacity onPress={handleSubmit} >
+        <Text style={styles.headerButtonText}>Registrarse</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.headerButton}>
+        <TouchableOpacity onPress={() => router.push('/login')}>
+          <Text style={styles.headerButtonText}>Ya tengo una cuenta</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -90,4 +99,17 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 4,
   },
+      headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  }
 });

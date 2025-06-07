@@ -52,7 +52,7 @@ export default function CategoryNotes() {
 
   const handleAddToCategory = async (noteId: number) => {
     try {
-      await fetch('http://localhost:3000/api/categories/add-note', {
+      await fetch(`${datos.API_URL}/api/categories/add-note`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function CategoryNotes() {
 
   const handleRemoveFromCategory = async (noteId: number) => {
     try {
-      await fetch('http://localhost:3000/api/categories/remove-note', {
+      await fetch(`${datos.API_URL}/api/categories/remove-note`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,11 @@ export default function CategoryNotes() {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Button title="Volver a Categorías" onPress={() => router.push('/categories')} />
+        <View style={styles.headerButton}>
+        <TouchableOpacity onPress={() => router.push('/categories')}>
+          <Text style={styles.headerButtonText}>Volver a categorias</Text>
+        </TouchableOpacity>
+        </View>
       </View>
       <Text style={styles.sectionTitle}>Notas en esta Categoría</Text>
       <FlatList
@@ -140,5 +144,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  noteTitle: { fontSize: 16 }
+  noteTitle: { fontSize: 16 },
+  headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  }
 });

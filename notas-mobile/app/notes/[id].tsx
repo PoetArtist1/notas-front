@@ -1,6 +1,6 @@
 // app/notes/[id].tsx
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Switch, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Switch, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { AuthContext } from '../../src/context/AuthContext';
 
@@ -116,9 +116,15 @@ export default function NoteDetailPage() {
         <Text>Pública</Text>
         <Switch value={isPublic} onValueChange={setIsPublic} />
       </View>
-      <Button title="Guardar Cambios" onPress={handleUpdate} />
-      <View style={{ marginTop: 12 }}>
-        <Button title="Eliminar Nota" color="#d9534f" onPress={handleDelete} />
+      <View style={styles.headerButton}>
+      <TouchableOpacity onPress={handleUpdate}>
+        <Text style={styles.headerButtonText}>Guardar nota</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.deleteButton}>
+        <TouchableOpacity onPress={handleDelete}>
+          <Text style={styles.headerButtonText}>Eliminar nota</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -140,5 +146,25 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     justifyContent: 'space-between'
   },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+    headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  },
+    deleteButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#d9534f',
+    marginTop: 20
+  }
 });

@@ -1,6 +1,6 @@
 // app/categories/create.tsx
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { AuthContext } from '../../src/context/AuthContext';
 
@@ -45,13 +45,17 @@ export default function CreateCategory() {
         onChangeText={setName}
         maxLength={100}
       />
-      <Button title="Crear Categoría" onPress={handleCreate} />
+      <View style={styles.headerButton}>
+      <TouchableOpacity onPress={handleCreate}>
+        <Text style={styles.headerButtonText}>Crear categoria</Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, marginTop: 40 },
   label: { marginTop: 12, fontWeight: 'bold' },
   input: {
     borderWidth: 1,
@@ -59,5 +63,18 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 6,
     borderRadius: 4
+  },
+   headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
   }
 });

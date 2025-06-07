@@ -1,6 +1,13 @@
 // app/categories/index.tsx
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Button, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  StyleSheet
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { AuthContext } from '../../src/context/AuthContext';
 
@@ -35,22 +42,28 @@ export default function CategoriesList() {
   const handleDelete = async (catId: number) => {
     Alert.alert(
       'Confirmar',
-      'Al borrar la categoría, las notas se desvincularán. ¿Continuar?',
+      'Al borrar la categoría, las notas enlazadas se eliminarán. ¿Continuar?',
       [
         { text: 'Cancelar' },
         {
           text: 'Sí, borrar',
           onPress: async () => {
             try {
-              const resp = await fetch(`${datos.API_URL}/api/categories/${catId}`, {
-                method: 'DELETE',
-                headers: { Authorization: `Bearer ${token}` }
-              });
+              const resp = await fetch(
+                `${datos.API_URL}/api/categories/${catId}`,
+                {
+                  method: 'DELETE',
+                  headers: { Authorization: `Bearer ${token}` }
+                }
+              );
               if (resp.ok) {
                 fetchCategories();
               } else {
                 const data = await resp.json();
-                Alert.alert('Error', data.msg || 'No se pudo eliminar categoría');
+                Alert.alert(
+                  'Error',
+                  data.msg || 'No se pudo eliminar categoría'
+                );
               }
             } catch {
               Alert.alert('Error', 'No se pudo conectar al servidor');
@@ -67,22 +80,41 @@ export default function CategoriesList() {
       onPress={() => router.push(`/categories/${item.id}`)}
     >
       <Text style={styles.catName}>{item.name}</Text>
-      <Button title="Borrar" color="#d9534f" onPress={() => handleDelete(item.id)} />
+      <TouchableOpacity
+        onPress={() => handleDelete(item.id)}
+        style={styles.deleteButton}
+      >
+        <Text style={styles.deleteText}>Borrar</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Button title="Agregar Categoría" onPress={() => router.push('/categories/create')} />
-        <Button title="Volver a Notas" onPress={() => router.push('/notes')} />
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => router.push('/categories/create')}
+        >
+          <Text style={styles.headerButtonText}>Crear categoría</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => router.push('/notes')}
+        >
+          <Text style={styles.headerButtonText}>Volver a notas</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={categories}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={{ padding: 16 }}
-        ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No hay categorías</Text>}
+        ListEmptyComponent={
+          <Text style={{ textAlign: 'center' }}>
+            No hay categorías
+          </Text>
+        }
       />
     </View>
   );
@@ -95,6 +127,19 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 40
   },
+  headerButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
+  },
+  headerButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  },
   catItem: {
     backgroundColor: '#f2f2f2',
     padding: 12,
@@ -104,5 +149,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  catName: { fontSize: 18 }
+  catName: { fontSize: 18 },
+  deleteButton: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: '#d9534f',
+    borderRadius: 4
+  },
+  deleteText: {
+    color: '#fff',
+    fontWeight: 'bold'
+  }
 });

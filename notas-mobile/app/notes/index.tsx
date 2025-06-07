@@ -5,7 +5,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Button,
   StyleSheet,
   Alert,
 } from 'react-native';
@@ -24,7 +23,7 @@ type Note = {
 
 export default function NotesList() {
   const [notes, setNotes] = useState<Note[]>([]);
-  const { token, logout } = useContext(AuthContext);
+  const { token, username, logout } = useContext(AuthContext);
   const router = useRouter();
 
   const fetchNotes = async () => {
@@ -108,6 +107,11 @@ export default function NotesList() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Mostrar saludo en la parte superior */}
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>Bienvenido, {username}!</Text>
+      </View>
+
       <View style={styles.header}>
         <TouchableOpacity style={styles.headerButton} onPress={logout}>
           <Text style={styles.headerButtonText}>Cerrar Sesión</Text>
@@ -128,9 +132,10 @@ export default function NotesList() {
 
       <View style={styles.addButton}>
         <TouchableOpacity
-          style={styles.headerButton} onPress={() => router.push('/notes/create')}
+          style={styles.headerButton}
+          onPress={() => router.push('/notes/create')}
         >
-        <Text style={styles.headerButtonText}>Crear nota</Text>
+          <Text style={styles.headerButtonText}>Crear nota +</Text>
         </TouchableOpacity>
       </View>
 
@@ -140,7 +145,7 @@ export default function NotesList() {
         renderItem={renderItem}
         contentContainerStyle={{
           padding: 15,
-          marginTop: 20,
+          marginTop: 5,
         }}
         ListEmptyComponent={
           <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
@@ -153,8 +158,19 @@ export default function NotesList() {
 }
 
 const styles = StyleSheet.create({
+  welcomeContainer: {
+    marginTop: 40,
+    padding: 15,
+    alignItems: 'center',
+    backgroundColor: '#4d91ff',
+  },
+  welcomeText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#ffffff'
+  },
   header: {
-    marginTop: 60,
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
@@ -163,20 +179,21 @@ const styles = StyleSheet.create({
   headerButton: {
     paddingVertical: 6,
     paddingHorizontal: 10,
-    borderRadius: 4,
-    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    backgroundColor: '#4d91ff',
+    marginTop: 20
   },
   headerButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#ffffff',
     textAlign: 'center',
   },
   addButton: {
     width: 180,
     flexDirection: 'row',
     padding: 15,
-    marginTop: 10,
+    marginTop: 15,
   },
   noteItemContainer: {
     flexDirection: 'row',
@@ -185,7 +202,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 10,
     borderRadius: 10,
-    elevation: 5,
+    elevation: 3,
   },
   noteContent: {
     flex: 1,
